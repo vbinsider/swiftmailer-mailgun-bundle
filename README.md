@@ -15,10 +15,10 @@ http interface for sending messages.
 ## Installation
 
 ```bash
-composer require cspoo/swiftmailer-mailgun-bundle php-http/guzzle5-adapter
+composer require cspoo/swiftmailer-mailgun-bundle kriswallsmith/buzz nyholm/psr7
 ```
 
-*Note: You can use any of [these adapters](https://packagist.org/providers/php-http/client-implementation)*
+*Note: `kriswallsmith/buzz` and `nyholm/psr7` are suggestions, you have the flexibility to choose what [PSR-7 implementation and HTTP client](https://packagist.org/providers/php-http/client-implementation) you want to use.*
 
 ## Configuration
 
@@ -75,12 +75,6 @@ Configure your Mailgun credentials:
 cspoo_swiftmailer_mailgun:
     key: '%env(MAILGUN_API_KEY)%'
     domain: "%env(MAILGUN_DOMAIN)%"
-
-services:
-    Mailgun\Mailgun:
-        class: Mailgun\Mailgun
-        factory: ['Mailgun\Mailgun', create]
-        arguments: ['%env(MAILGUN_API_KEY)%']
 ```
 
 Finally, add the following line on swiftmailer config:
@@ -124,7 +118,7 @@ bin/console swiftmailer:email:send --from=<from email> --to=<to email> --subject
 
 ## Choose HTTP client
 
-Mailgun 2.0 is no longer coupled to Guzzle5. Thanks to [Httplug](http://docs.php-http.org/en/latest/index.html) you can now use any
+Starting from version 2.0, the Mailgun library is no longer coupled to Guzzle5. Thanks to [Httplug](http://docs.php-http.org/en/latest/index.html) you can now use any
 library to transport HTTP messages. You can rely on [discovery](http://docs.php-http.org/en/latest/discovery.html) to automatically
 find an installed client or you can use [HttplugBundle](https://github.com/php-http/HttplugBundle) and provide a client service name 
 to the mailgun configuration. 
